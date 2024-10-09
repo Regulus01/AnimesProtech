@@ -51,7 +51,7 @@ public class AnimeController : BaseController
     }
 
     /// <summary>
-    /// Obtem um anime no banco de dados, com a possibilidade de filtros
+    /// Obtem um anime, com a possibilidade de filtros
     /// </summary>
     /// <param name="diretor">Nome do diretor</param>
     /// <param name="nome">Nome do anime</param>
@@ -76,8 +76,8 @@ public class AnimeController : BaseController
     /// <param name="id">Id do anime a ser removido</param>
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpDelete]
-    public IActionResult RemoverAnime(Guid id)
+    [HttpDelete("{id:guid}")]
+    public IActionResult RemoverAnime([FromRoute] Guid id)
     {
         _animeAppService.RemoverAnime(id);
         

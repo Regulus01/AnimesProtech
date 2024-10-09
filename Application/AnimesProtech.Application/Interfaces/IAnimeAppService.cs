@@ -6,10 +6,10 @@ namespace AnimesProtech.Application.Interfaces;
 public interface IAnimeAppService
 {
     /// <summary>
-    /// Insere um anime no banco de dados
+    /// Insere um anime no sistema
     /// </summary>
     /// <param name="dto"></param>
-    /// <returns></returns>
+    /// <returns>Anime criado</returns>
     CriarAnimeViewModel? CriarAnime(CriarAnimeDto dto);
     
     /// <summary>
@@ -21,7 +21,7 @@ public interface IAnimeAppService
     EditarAnimeViewModel? EditarAnime(Guid id, EditarAnimeDto dto);
 
     /// <summary>
-    /// Filtra um anime a partir do nome do diretor, nome ou palavras chaves
+    /// Obtem um anime, com a possibilidade de filtros
     /// </summary>
     /// <param name="diretor">Nome do diretor do anime</param>
     /// <param name="nome">Nome do anime</param>

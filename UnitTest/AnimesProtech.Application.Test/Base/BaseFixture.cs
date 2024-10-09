@@ -1,5 +1,6 @@
 ﻿using AnimesProtech.Domain.Interface.Base;
 using AnimesProtech.Domain.Interface.Notification;
+using AnimesProtech.Domain.Notification;
 using Moq;
 using Moq.AutoMock;
 
@@ -26,7 +27,7 @@ public class BaseFixture
     public void NeverNotifications()
     {
         Mocker.GetMock<INotify>()
-            .Verify(x => x.NewNotification(It.IsAny<IDictionary<string, string>>()),
+            .Verify(x => x.NewNotification(It.IsAny<IEnumerable<Notification>>()),
                 Times.Never);
 
         Mocker.GetMock<INotify>()

@@ -1,4 +1,5 @@
 ﻿namespace AnimesProtech.Domain.Entities.Base;
+using NotificationDomain = Notification.Notification;
 
 public abstract class BaseEntity
 {
@@ -20,5 +21,5 @@ public abstract class BaseEntity
     /// Método responsável por validar a entidade
     /// </summary>
     /// <returns>Tupla com os erros ocorridos durante a validação</returns>
-    public abstract (bool IsValid, IDictionary<string, string> Erros) Validate();
+    public abstract (bool IsValid, IEnumerable<NotificationDomain> Erros) Validate();
 }

@@ -1,11 +1,15 @@
 ﻿using System.Data;
 using System.Reflection;
+using AnimesProtech.Application.Interfaces;
 using AnimesProtech.Application.Mapper;
+using AnimesProtech.Application.Services;
 using AnimesProtech.Domain.Bus;
 using AnimesProtech.Domain.Interface.Bus;
 using AnimesProtech.Domain.Interface.Notification;
+using AnimesProtech.Domain.Interface.Repository;
 using AnimesProtech.Infra.CrossCutting.Notification;
 using AnimesProtech.Infra.Data.Context;
+using AnimesProtech.Infra.Data.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,6 +40,8 @@ public static class DependencyInjection
     /// <param name="services">Coleção de serviços</param>
     private static void ConfigureIoC(IServiceCollection services)
     {
+        services.AddScoped<IAnimeAppService, AnimeAppService>();
+        services.AddScoped<IAnimeRepository, AnimeRepository>();
     }
 
     /// <summary>
@@ -73,19 +79,19 @@ public static class DependencyInjection
     {
         services.AddSwaggerGen(options =>
         {
-            var xmlFileService = $"{Assembly.Load("SupplyChain.Api").GetName().Name}.xml";
+            var xmlFileService = $"{Assembly.Load("AnimesProtech.Api").GetName().Name}.xml";
             var xmlPathService = Path.Combine(AppContext.BaseDirectory, xmlFileService);
             options.IncludeXmlComments(xmlPathService);
             
-            var xmlFileApplication = $"{Assembly.Load("SupplyChain.Application").GetName().Name}.xml";
+            var xmlFileApplication = $"{Assembly.Load("AnimesProtech.Application").GetName().Name}.xml";
             var xmlPathApplication = Path.Combine(AppContext.BaseDirectory, xmlFileApplication);
             options.IncludeXmlComments(xmlPathApplication);
             
             options.SwaggerDoc("v1", new OpenApiInfo
             {
                 Version = "v1",
-                Title = "Supply Chain Api",
-                Description = "Api para gerenciamento de mercadorias",
+                Title = "Animes protech Api",
+                Description = "Api para gerenciamento de animes",
                 Contact = new OpenApiContact
                 {
                     Name = "Email",

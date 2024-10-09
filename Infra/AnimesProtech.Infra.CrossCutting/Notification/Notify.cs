@@ -22,11 +22,11 @@ public class Notify : INotify
         _notifications.Add(new NotificationDomain(key, message));
     }
 
-    public void NewNotification(IDictionary<string, string> erros)
+    public void NewNotification(IEnumerable<NotificationDomain> erros)
     {
         foreach (var erro in erros)
         {
-            _notifications.Add(new NotificationDomain(erro.Key, erro.Value));
+            _notifications.Add(new NotificationDomain(erro.Code, erro.Message));
         }
     }
 }

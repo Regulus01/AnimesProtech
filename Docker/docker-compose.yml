@@ -8,6 +8,6 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: SupplyChain
+      POSTGRES_DB: AnimesProtech
     ports:
       - "5432:5432" 

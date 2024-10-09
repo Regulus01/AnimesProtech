@@ -12,8 +12,4 @@
         <ProjectReference Include="..\..\Infra\AnimesProtech.Infra.CrossCuting.IoC\AnimesProtech.Infra.CrossCuting.IoC.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Controllers\"/>
-    </ItemGroup>
-
 </Project>

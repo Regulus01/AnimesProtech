@@ -21,6 +21,7 @@ public partial class AnimeAppService : IAnimeAppService
         _bus = bus;
     }
 
+    /// <inheritdoc />
     public CriarAnimeViewModel? CriarAnime(CriarAnimeDto dto)
     {
         var animeExistente = _animeRepository.Query<Anime>(x => x.Nome.Equals(dto.Nome)).FirstOrDefault();
@@ -43,7 +44,8 @@ public partial class AnimeAppService : IAnimeAppService
 
         return _mapper.Map<CriarAnimeViewModel>(anime);
     }
-
+    
+    /// <inheritdoc />
     public EditarAnimeViewModel? EditarAnime(Guid id, EditarAnimeDto dto)
     {
         var anime = _animeRepository.Query<Anime>(x => x.Id.Equals(id)).FirstOrDefault();
@@ -65,5 +67,18 @@ public partial class AnimeAppService : IAnimeAppService
             return null;
 
         return _mapper.Map<EditarAnimeViewModel>(anime);
+    }
+
+    public IEnumerable<ObterAnimeViewModel>? ObterAnime(string? diretor, string? nome, string? palavrasChaves,
+                                                        int? skip, int? take)
+    {
+        var predicate = FiltroObterAnime(diretor, nome, palavrasChaves);
+
+        var animes = _animeRepository.Query(predicate, skip, take).ToList();
+
+        if (animes.Count == 0)
+            return new List<ObterAnimeViewModel>();
+        
+        return _mapper.Map<IEnumerable<ObterAnimeViewModel>>(animes);
     }
 }

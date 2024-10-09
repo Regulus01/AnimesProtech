@@ -10,5 +10,6 @@ public class DomainToViewModelMappingProfile : Profile
     {
         CreateMap<Anime, CriarAnimeViewModel>();
         CreateMap<Anime, EditarAnimeViewModel>();
+        CreateMap<Anime, ObterAnimeViewModel>();
     }
 }

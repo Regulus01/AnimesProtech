@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Domain\AnimesProtech.Domain\AnimesProtech.Domain.csproj" />
+      <ProjectReference Include="..\..\Infra\AnimesProtech.Infra.CrossCutting\AnimesProtech.Infra.CrossCutting.csproj" />
     </ItemGroup>
 
     <ItemGroup>

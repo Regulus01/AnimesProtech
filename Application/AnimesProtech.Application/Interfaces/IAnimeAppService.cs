@@ -31,4 +31,10 @@ public interface IAnimeAppService
     /// <returns>Animes do filtro</returns>
     IEnumerable<ObterAnimeViewModel>? ObterAnime(string? diretor, string? nome, string? palavrasChaves, 
                                                  int? skip, int? take);
+    
+    /// <summary>
+    /// Remove um anime por id
+    /// </summary>
+    /// <param name="id">Id do anime a ser removido</param>
+    void RemoverAnime(Guid id);
 }

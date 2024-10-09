@@ -69,4 +69,18 @@ public class AnimeController : BaseController
         
         return Response(HttpStatusCode.OK, result);
     }
+
+    /// <summary>
+    /// Remove um anime a partir do id
+    /// </summary>
+    /// <param name="id">Id do anime a ser removido</param>
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpDelete]
+    public IActionResult RemoverAnime(Guid id)
+    {
+        _animeAppService.RemoverAnime(id);
+        
+        return Response(HttpStatusCode.NoContent);
+    }
 }

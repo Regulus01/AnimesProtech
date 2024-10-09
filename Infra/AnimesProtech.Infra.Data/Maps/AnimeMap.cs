@@ -23,6 +23,8 @@ public class AnimeMap : BaseEntityMap<Anime>
                .HasMaxLength(80)
                .IsRequired();
 
+        builder.Property(e => e.Deletado);
+
         builder.ToTable("Anime", "Animes");
     }
 }

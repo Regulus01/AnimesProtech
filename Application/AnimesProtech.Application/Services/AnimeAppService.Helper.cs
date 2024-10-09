@@ -51,7 +51,7 @@ public partial class AnimeAppService
     /// <returns>Expressão de filtro montada</returns>
     private static Expression<Func<Anime, bool>> FiltroObterAnime(string? diretor, string? nome, string? palavrasChaves)
     {
-        Expression<Func<Anime, bool>> predicate = x => true;
+        Expression<Func<Anime, bool>> predicate = x => !x.Deletado;
         
         if (!string.IsNullOrWhiteSpace(diretor)) 
             predicate = predicate.And(x => x.Diretor.Equals(diretor));

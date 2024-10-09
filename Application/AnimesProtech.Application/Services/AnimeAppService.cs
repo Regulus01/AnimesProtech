@@ -24,7 +24,7 @@ public partial class AnimeAppService : IAnimeAppService
     /// <inheritdoc />
     public CriarAnimeViewModel? CriarAnime(CriarAnimeDto dto)
     {
-        var animeExistente = _animeRepository.Query<Anime>(x => x.Nome.Equals(dto.Nome)).FirstOrDefault();
+        var animeExistente = _animeRepository.Query<Anime>(x => x.Nome.Equals(dto.Nome) && !x.Deletado).FirstOrDefault();
 
         if (animeExistente != null)
         {
@@ -48,7 +48,7 @@ public partial class AnimeAppService : IAnimeAppService
     /// <inheritdoc />
     public EditarAnimeViewModel? EditarAnime(Guid id, EditarAnimeDto dto)
     {
-        var anime = _animeRepository.Query<Anime>(x => x.Id.Equals(id)).FirstOrDefault();
+        var anime = _animeRepository.Query<Anime>(x => x.Id.Equals(id) && !x.Deletado).FirstOrDefault();
 
         if (anime == null)
         {
@@ -56,7 +56,7 @@ public partial class AnimeAppService : IAnimeAppService
             return null;
         }
         
-        anime.EditarAnime(dto.Nome, dto.Resumo, dto.Diretor);
+        anime.Editar(dto.Nome, dto.Resumo, dto.Diretor);
     
         if (!Validar(anime))
             return null;
@@ -69,6 +69,7 @@ public partial class AnimeAppService : IAnimeAppService
         return _mapper.Map<EditarAnimeViewModel>(anime);
     }
 
+    /// <inheritdoc />
     public IEnumerable<ObterAnimeViewModel>? ObterAnime(string? diretor, string? nome, string? palavrasChaves,
                                                         int? skip, int? take)
     {
@@ -80,5 +81,23 @@ public partial class AnimeAppService : IAnimeAppService
             return new List<ObterAnimeViewModel>();
         
         return _mapper.Map<IEnumerable<ObterAnimeViewModel>>(animes);
+    }
+
+    /// <inheritdoc />
+    public void RemoverAnime(Guid id)
+    {
+        var anime = _animeRepository.Query<Anime>(x => x.Id.Equals(id) && !x.Deletado).FirstOrDefault();
+
+        if (anime == null)
+        {
+            _bus.Notify.NewNotification("Erro", "Anime não encontrado");
+            return;
+        }
+        
+        anime.Deletar();
+
+        _animeRepository.Update(anime);
+        
+        SaveChanges();
     }
 }

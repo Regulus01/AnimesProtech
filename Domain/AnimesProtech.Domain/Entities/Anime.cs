@@ -8,6 +8,7 @@ public class Anime : BaseEntity
     public string Nome { get; private set; }
     public string Resumo { get; private set; }
     public string Diretor { get; private set; }
+    public bool Deletado { get; private set; }
 
     public Anime(string nome, string resumo, string diretor)
     {
@@ -16,11 +17,16 @@ public class Anime : BaseEntity
         Diretor = diretor;
     }
 
-    public void EditarAnime(string nome, string resumo, string diretor)
+    public void Editar(string nome, string resumo, string diretor)
     {
         Nome = nome;
         Resumo = resumo;
         Diretor = diretor;
+    }
+
+    public void Deletar()
+    {
+        Deletado = true;
     }
     
     public override (bool IsValid, IEnumerable<NotificationDomain> Erros) Validate()

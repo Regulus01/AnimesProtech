@@ -3,6 +3,7 @@ using AnimesProtech.Domain.Entities;
 using AnimesProtech.Domain.Entities.Base;
 using AnimesProtech.Domain.Resourcers;
 using AnimesProtech.Infra.CrossCutting.Extensions;
+using Microsoft.Extensions.Logging;
 
 namespace AnimesProtech.Application.Services;
 
@@ -70,6 +71,27 @@ public partial class AnimeAppService
         }
 
         return predicate;
+    }
+    
+    /// <summary>
+    /// Gera um log informativo sobre a consulta de animes, incluindo parâmetros de entrada e quantidade de resultados
+    /// </summary>
+    /// <param name="diretor">Nome do diretor do anime utilizado no filtro da consulta.</param>
+    /// <param name="nome">Nome do anime utilizado no filtro da consulta.</param>
+    /// <param name="palavrasChaves">Palavras-chave utilizadas no filtro da consulta.</param>
+    /// <param name="skip">Quantidade de resultados a serem ignorados no início da consulta (paginação).</param>
+    /// <param name="take">Quantidade máxima de resultados a serem retornados (paginação).</param>
+    /// <param name="animes">Lista de animes retornada pela consulta.</param>
+    private void GerarLogConsultaDeAnime(string? diretor, string? nome, string? palavrasChaves, int? skip, int? take,
+        List<Anime> animes)
+    {
+        _logger.LogInformation("Consulta realizada. " +
+                               "Parâmetros - Diretor: {Diretor}, " +
+                               "Nome: {Nome}," +
+                               " Palavras-Chaves: {PalavrasChaves}, " +
+                               "Skip: {Skip}, Take: {Take}. " +
+                               "Total de resultados: {Count}",
+            diretor, nome, palavrasChaves, skip, take, animes.Count);
     }
 
 }

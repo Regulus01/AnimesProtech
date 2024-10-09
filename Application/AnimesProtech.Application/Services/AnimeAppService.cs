@@ -5,6 +5,8 @@ using AnimesProtech.Domain.Entities;
 using AnimesProtech.Domain.Interface.Bus;
 using AnimesProtech.Domain.Interface.Repository;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
+using static System.Text.Json.JsonSerializer;
 
 namespace AnimesProtech.Application.Services;
 
@@ -13,12 +15,14 @@ public partial class AnimeAppService : IAnimeAppService
     private readonly IAnimeRepository _animeRepository;
     private readonly IMapper _mapper;
     private readonly IBus _bus;
+    private readonly ILogger<AnimeAppService> _logger;
 
-    public AnimeAppService(IAnimeRepository animeRepository, IMapper mapper, IBus bus)
+    public AnimeAppService(IAnimeRepository animeRepository, IMapper mapper, IBus bus, ILogger<AnimeAppService> logger)
     {
         _animeRepository = animeRepository;
         _mapper = mapper;
         _bus = bus;
+        _logger = logger;
     }
 
     /// <inheritdoc />
@@ -33,7 +37,7 @@ public partial class AnimeAppService : IAnimeAppService
         }
         
         var anime = new Anime(dto.Nome, dto.Resumo, dto.Diretor);
-    
+
         if (!Validar(anime))
             return null;
         
@@ -42,6 +46,8 @@ public partial class AnimeAppService : IAnimeAppService
         if (!SaveChanges())
             return null;
 
+        _logger.LogInformation("Registro criado: {body}", Serialize(anime));
+        
         return _mapper.Map<CriarAnimeViewModel>(anime);
     }
     
@@ -65,6 +71,8 @@ public partial class AnimeAppService : IAnimeAppService
 
         if (!SaveChanges())
             return null;
+        
+        _logger.LogInformation("Registro editado: {body}", Serialize(anime));
 
         return _mapper.Map<EditarAnimeViewModel>(anime);
     }
@@ -77,6 +85,8 @@ public partial class AnimeAppService : IAnimeAppService
 
         var animes = _animeRepository.Query(predicate, skip, take).ToList();
 
+        GerarLogConsultaDeAnime(diretor, nome, palavrasChaves, skip, take, animes);
+        
         if (animes.Count == 0)
             return new List<ObterAnimeViewModel>();
         
@@ -98,6 +108,9 @@ public partial class AnimeAppService : IAnimeAppService
 
         _animeRepository.Update(anime);
         
-        SaveChanges();
+        if(SaveChanges())
+        {
+            _logger.LogInformation("Registro removido: {body}", Serialize(anime));
+        };
     }
 }

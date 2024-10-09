@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Net;
 using AnimesProtech.Application.Interfaces;
 using AnimesProtech.Application.ValueObjects.Dto;
 using AnimesProtech.Application.ValueObjects.ViewModels;
@@ -31,5 +32,21 @@ public class AnimeController : BaseController
         var result = _animeAppService.CriarAnime(dto);
         
         return Response(HttpStatusCode.Created, result);
+    }
+
+    /// <summary>
+    /// Edita um anime no banco de dados
+    /// </summary>
+    /// <param name="id">Id do anime para edição</param>
+    /// <param name="dto"></param>
+    /// <returns>Anime editado</returns>
+    [ProducesResponseType(typeof(EditarAnimeViewModel), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpPut("{id:guid}")]
+    public IActionResult EditarAnime([Required][FromRoute] Guid id, EditarAnimeDto dto)
+    {
+        var result = _animeAppService.EditarAnime(id, dto);
+        
+        return Response(HttpStatusCode.Created, result);  
     }
 }

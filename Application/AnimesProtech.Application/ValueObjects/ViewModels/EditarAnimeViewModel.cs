@@ -2,7 +2,7 @@
 
 namespace AnimesProtech.Application.ValueObjects.ViewModels;
 
-public class CriarAnimeViewModel : BaseViewModel
+public class EditarAnimeViewModel : BaseViewModel
 {
     public string Nome { get; set; }
     public string Resumo { get; set; }

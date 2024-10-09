@@ -43,4 +43,27 @@ public partial class AnimeAppService : IAnimeAppService
 
         return _mapper.Map<CriarAnimeViewModel>(anime);
     }
+
+    public EditarAnimeViewModel? EditarAnime(Guid id, EditarAnimeDto dto)
+    {
+        var anime = _animeRepository.Query<Anime>(x => x.Id.Equals(id)).FirstOrDefault();
+
+        if (anime == null)
+        {
+            _bus.Notify.NewNotification("Erro", "Anime não encontrado");
+            return null;
+        }
+        
+        anime.EditarAnime(dto.Nome, dto.Resumo, dto.Diretor);
+    
+        if (!Validar(anime))
+            return null;
+        
+        _animeRepository.Update(anime);
+
+        if (!SaveChanges())
+            return null;
+
+        return _mapper.Map<EditarAnimeViewModel>(anime);
+    }
 }

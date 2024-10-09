@@ -9,8 +9,7 @@ public class MappingConfiguration
     {
         return new MapperConfiguration(config =>
         {
-            config.AddProfile(new DomainToViewModelMappingProfile());
-            config.AddProfile(new ViewModelToViewModelMappingProfile());
+            config.AddProfile(new DomainToViewModelMappingProfile()); 
         });
     }
 }

@@ -11,4 +11,5 @@ public interface IAnimeAppService
     /// <param name="dto"></param>
     /// <returns></returns>
     CriarAnimeViewModel? CriarAnime(CriarAnimeDto dto);
+    EditarAnimeViewModel? EditarAnime(Guid id, EditarAnimeDto dto);
 }

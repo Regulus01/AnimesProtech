@@ -15,6 +15,13 @@ public class Anime : BaseEntity
         Resumo = resumo;
         Diretor = diretor;
     }
+
+    public void EditarAnime(string nome, string resumo, string diretor)
+    {
+        Nome = nome;
+        Resumo = resumo;
+        Diretor = diretor;
+    }
     
     public override (bool IsValid, IEnumerable<NotificationDomain> Erros) Validate()
     {

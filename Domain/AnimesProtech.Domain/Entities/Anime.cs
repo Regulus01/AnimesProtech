@@ -43,7 +43,7 @@ public class Anime : BaseEntity
     private void ValidarDiretor(List<NotificationDomain> erros)
     {
         if (string.IsNullOrWhiteSpace(Diretor))
-            erros.Add(new NotificationDomain("Erro", "O nome do anime não pode ser vazio"));
+            erros.Add(new NotificationDomain("Erro", "O nome do diretor do anime não pode ser vazio"));
 
         if(Diretor?.Length > 50)
             erros.Add(new NotificationDomain("Erro", "O nome diretor do anime, não pode ultrapassar 50 caracteres"));

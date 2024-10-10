@@ -1,6 +1,10 @@
-﻿using AnimesProtech.Domain.Interface.Base;
+﻿using System.Linq.Expressions;
+using AnimesProtech.Domain.Entities.Base;
+using AnimesProtech.Domain.Interface.Base;
+using AnimesProtech.Domain.Interface.Bus;
 using AnimesProtech.Domain.Interface.Notification;
 using AnimesProtech.Domain.Notification;
+using Microsoft.EntityFrameworkCore.Query;
 using Moq;
 using Moq.AutoMock;
 
@@ -16,14 +20,14 @@ public class BaseFixture
             .Setup(x => x.HasNotifications())
             .Returns(hasNotification);
     }
-
+    
     public void SetupSaveChanges<T>(bool success = true) where T : class, IBaseRepository
     {
         Mocker.GetMock<T>()
             .Setup(x => x.SaveChanges())
             .Returns(success);
     }
-    
+
     public void NeverNotifications()
     {
         Mocker.GetMock<INotify>()

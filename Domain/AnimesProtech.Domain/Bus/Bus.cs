@@ -5,7 +5,7 @@ namespace AnimesProtech.Domain.Bus;
 
 public class Bus : IBus
 {
-    public INotify Notify { get; private set; }
+    public INotify Notify { get; set; }
 
     public Bus(INotify notify)
     {
